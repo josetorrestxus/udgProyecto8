@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const estudianteSchema = new Schema({
+  codigo: {
+    type: String,
+    required: true
+  },
   correo: {
     type: String,
     required: true

@@ -1,4 +1,6 @@
 // librerias
+const User = require('./models/user');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -35,6 +37,16 @@ mongoose
   .then(result => {
     console.log('Se abrió correctamente la BD mongo local');
     // console.log(result);
+    User.findOne().then(user => {
+      if (!user) {
+        const user = new User({
+          name: 'jtorres',
+          email: 'jtorres19749@gmail.com'
+
+        });
+        user.save();
+      }
+    });
   })
 
 // ejecucion del servidor

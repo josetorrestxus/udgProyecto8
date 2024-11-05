@@ -11,6 +11,27 @@ function yyyymmdd(dat = new Date()) {
 // un solo estudiante pero con las carreras
 
 
+
+
+exports.getStudentCodigo = (req, res, next) => {
+  const codigo = req.body.codigo;
+  console.log(codigo);
+  Estudiante.findOne({codigo})
+  .then(data => {
+    console.log(data);
+    
+    res.status(200).json({
+      status: 'success',
+      data
+    });
+    res.end;
+    
+  })
+  .catch(err => console.log(err));
+};
+
+
+
 exports.getStudentId = (req, res, next) => {
   const id = req.query.id;
   console.log(id);
@@ -63,8 +84,7 @@ exports.getStudents = (req, res, next) => {
 exports.postStudent = (req, res, next) => {
   console.log (req.body);
   if (req.body.correo && req.body.nombre) {
-
-    
+    const codigo= req.body.codigo ;
     const correo= req.body.correo ;
     const nombre= req.body.nombre;
     const correoInstitucional= req.body.correoInstitucional || '';
@@ -81,13 +101,13 @@ exports.postStudent = (req, res, next) => {
     const fecha= req.body.fecha || '';
     const promedio= req.body.promedio || 0;
     const calificaciones= req.body.calificaciones || [];
-  
-    
+   
     Estudiante.findOne({correo})
     .then(estud => {
       if (!estud) {
         
         const stu = new Estudiante({
+          codigo,
           correo,
           nombre,
           correoInstitucional,
@@ -213,9 +233,89 @@ exports.putStudent = (req, res, next) => {
     res.end;
     
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    res.status(400).json({
+      status: 'error',
+      error: 'Debe tener correo y nombre.'
+    });
+    res.end;
+  });
 };
 
+
+
+exports.studentgrade = (req, res, next) => {
+  const ciclo = req.body.ciclo;
+  const materia = req.body.materia;
+  const codigo = req.body.codigo;
+  const calificacion = req.body.calificacion;
   
+  Estudiante.findOne({codigo})
+  .then(stu => {
+    if (stu) {
+     stu.calificaciones.push({ciclo,materia, calificacion})
+     stu.save(); 
+     res.status(200).json({
+      status: 'success',
+      data: stu
+    });
+    res.end;
+    } else {
+      res.status(400).json({
+        status: 'error',
+        error: 'Debe tener ciclo, materia, codigo y calificacion'
+      });
+      res.end;
+    }
+  })
+  .catch(err => {
+    res.status(400).json({
+      status: 'error',
+      error: 'Debe tener correo y nombre.'
+    });
+    res.end;
+  });
+
+}
 
 
+exports.postBuscaEstudiantes = (req, res, next) => {
+  const find = req.body.find;  
+  const projection = req.body.projection;  
+  const skip = req.body.skip;  
+  const limit = req.body.limit;  
+  const sort = req.body.sort;  
+  // console.log(req);
+  console.log(find);
+
+  try {
+    
+    Estudiante.find(find, projection, {skip, limit, sort})
+    .then(data => { 
+      res.set('Access-Control-Allow-Origin', '*');
+      res.status(200).json({
+        status: 'success',
+        data: data
+      });
+    
+    })
+    
+    
+    ;
+  } catch (err) {
+    console.log(err);
+    Log.create({
+      tipo: "error",
+      tags: "postBuscaEstudiantes, buscarEstudiantes",
+      descripcion: err.message,
+      datos : req.body
+    })
+
+    res.status(400).json({
+      status: 'error al buscar estudiantes',
+    })
+    res.end; 
+  }
+  
+  
+};
