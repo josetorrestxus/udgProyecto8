@@ -73,7 +73,7 @@ console.log(process.env.CONNECTION_STRING);
 mongoose
   .connect(
     process.env.CONNECTION_STRING, 
-    { useNewUrlParser: true, useUnifiedTopology: true,  useFindAndModify: false , dbName: 'udgproyectoviii'},
+    { useNewUrlParser: true, useUnifiedTopology: true,  useFindAndModify: false , dbName: 'alumnos'},
   )
   .then(result => {
     console.log('Se abrió correctamente la BD mongo local');
