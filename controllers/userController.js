@@ -29,7 +29,7 @@ function yyyymmdd(dat = new Date()) {
   
   
 
-exports.postUser = (req, res, next) => {
+exports.postUser = ( req, res, next) => {
   const name = req.body.name.trim();  
   const email = req.body.email.trim();  
   // console.log(req);
@@ -82,7 +82,7 @@ exports.postUser = (req, res, next) => {
 
 
 
-exports.deletetUser = (req, res, next) => {
+exports.deletetUser = ( req, res, next) => {
   const _id = req.body._id.trim();  
 
   try {
@@ -125,7 +125,7 @@ exports.deletetUser = (req, res, next) => {
 
 
 
-exports.login = (req, res, next) => {
+exports.login = ( req, res, next) => {
   
   const email = req.body.email.trim();  
   const password = req.body.password.trim();  
@@ -200,7 +200,7 @@ function loginReturn(res, user){
 }
 
 
-exports.loginupdate = (req, res, next) => {
+exports.loginupdate = ( req, res, next) => {
   console.log(req.body);
   
   const username = req.body.username.trim();    
@@ -267,7 +267,7 @@ exports.loginupdate = (req, res, next) => {
 
 
   // solo las carreras
-  exports.getUsers = (req, res, next) => {
+  exports.getUsers = ( req, res, next) => {
     User.find()
       .then(users => {
         console.log(users);

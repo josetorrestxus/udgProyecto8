@@ -11,8 +11,6 @@ function yyyymmdd(dat = new Date()) {
 // un solo estudiante pero con las carreras
 
 
-
-
 exports.getStudentCodigo = (req, res, next) => {
   const codigo = req.body.codigo;
   console.log(codigo);
@@ -32,7 +30,7 @@ exports.getStudentCodigo = (req, res, next) => {
 
 
 
-exports.getStudentId = (req, res, next) => {
+exports.getStudentId = ( req, res, next) => {
   const id = req.query.id;
   console.log(id);
   Estudiante.findOne({_id : ObjectId(id)})
@@ -49,7 +47,7 @@ exports.getStudentId = (req, res, next) => {
   .catch(err => console.log(err));
 };
 
-exports.getStudentCorreo = (req, res, next) => {
+exports.getStudentCorreo = ( req, res, next) => {
   const correo = req.query.correo;
   Estudiante.findOne({correo})
   .then(data => {
@@ -66,7 +64,7 @@ exports.getStudentCorreo = (req, res, next) => {
 };
 
 
-exports.getStudents = (req, res, next) => {
+exports.getStudents = ( req, res, next) => {
   Estudiante.find({})
   .then(data => {
     console.log(data);
@@ -81,7 +79,7 @@ exports.getStudents = (req, res, next) => {
   .catch(err => console.log(err));
 };
 
-exports.postStudent = (req, res, next) => {
+exports.postStudent = ( req, res, next) => {
   console.log (req.body);
   if (req.body.correo && req.body.nombre) {
     const codigo= req.body.codigo ;
@@ -150,9 +148,7 @@ exports.postStudent = (req, res, next) => {
 
 };
 
-
-
-exports.putStudent = (req, res, next) => {
+exports.putStudent = ( req, res, next) => {
   console.log (req.body);
   if (req.body.correo && req.body.nombre) {
 
@@ -197,7 +193,7 @@ exports.putStudent = (req, res, next) => {
         stu.save();
         
         res.status(200).json({estatus: 'ok'});
-        res.end;
+        res.end();
         
       } else  {
         res.status(400).json({estatus: 'error, correo ya existe'});
@@ -218,33 +214,9 @@ exports.putStudent = (req, res, next) => {
 
   }
 
-  
-
-
-  
-  Estudiante.find({})
-  .then(data => {
-    console.log(data);
-    
-    res.status(200).json({
-      status: 'success',
-      data
-    });
-    res.end;
-    
-  })
-  .catch(err => {
-    res.status(400).json({
-      status: 'error',
-      error: 'Debe tener correo y nombre.'
-    });
-    res.end;
-  });
 };
 
-
-
-exports.studentgrade = (req, res, next) => {
+exports.studentgrade = ( req, res, next) => {
   const ciclo = req.body.ciclo;
   const materia = req.body.materia;
   const codigo = req.body.codigo;
@@ -278,8 +250,7 @@ exports.studentgrade = (req, res, next) => {
 
 }
 
-
-exports.postBuscaEstudiantes = (req, res, next) => {
+exports.postBuscaEstudiantes = ( req, res, next) => {
   const find = req.body.find;  
   const projection = req.body.projection;  
   const skip = req.body.skip;  

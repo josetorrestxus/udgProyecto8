@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "UDG Proyecto VIII - Backend del proyecto Instituto Torres",
+  "description": "UDG- Backend del proyecto Instituto Torres",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
